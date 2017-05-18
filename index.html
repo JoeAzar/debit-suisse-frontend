@@ -72,7 +72,15 @@
 							</tbody>
 						</table>
 					</div>
-					<div id="lvl2-3" class="col s12">Level 2/3</div>
+					<div id="lvl2-3" class="col s12">
+						<p>
+						  <form action="#">
+							<p class="range-field">
+							  <input type="range" id="test5" min="0" max="100" step="0.01"  onchange="updateTextInput(this.value);" />
+							</p>
+						  </form>
+						</p>
+					</div>
 					<div id="lvl4" class="col s12">										
 					
 					</div>
@@ -139,6 +147,18 @@
 						.call(yAxis);
 				});
 		});
+
+		function httpGet(theUrl) {
+			var xmlHttp = new XMLHttpRequest();
+			xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+			xmlHttp.send( null );
+			return xmlHttp.responseText;
+		}
+
+		function updateTextInput(val) {
+			textOutput = httpGet("http://localhost:8080/getProportion?proportion=" + val);
+			//document.getElementById('textInput').value=textOutput;
+		}
 	</script>
 </body>
 
