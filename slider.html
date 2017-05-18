@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+
+<header>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/css/materialize.min.css">
+</header>
+
+
+<script>
+function httpGet(theUrl) {
+    var xmlHttp = new XMLHttpRequest();
+    xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
+    xmlHttp.send( null );
+    return xmlHttp.responseText;
+}
+function updateTextInput(val) {
+        textOutput = httpGet("http://localhost:8080/getProportion?proportion=" + val);
+        document.getElementById('textInput').value=textOutput;
+}
+</script>
+
+
+<body>
+
+
+<p>
+  <form action="#">
+    <p class="range-field">
+      <input type="range" id="test5" min="0" max="100" step="0.01"  onchange="updateTextInput(this.value);" />
+    </p>
+  </form>
+</p>
+<input type="text" id="textInput" value="50.00">
+
+</body>
+
+</html>
