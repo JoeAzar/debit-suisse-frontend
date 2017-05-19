@@ -49,8 +49,6 @@
 			left: 50%;
 			margin: -25px -250px 0px -25px;
 		}
-
-
 	</style>
 </head>
 
@@ -81,7 +79,6 @@
 						<li class="tab col s3"><a href="#lvl4">Level 4</a></li>
 						<li class="tab col s3"><a href="#lvl5">Level 5</a></li>
 					</ul>
-					<!-- level 1 -->
 					<div id="lvl1" class "col s12" style="min-height: 200px">
 						<div class="card-panel">
 							<label>Stock Symbol: </label>
@@ -199,7 +196,7 @@
 
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<script>
-		//deprecated method of sending GET but makes workflow easier to understand for demonstration purposes
+		//deprecated method of sending GET, but also makes linearizes workflow for simplicity's sake
 		function httpGet(theUrl) {
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
@@ -208,8 +205,9 @@
 		}
 
 		//Level 1 ---------------------------------------------------
-
-		names = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getStockNames")); //route
+		
+		//get list of stock symbols from server
+		names = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getStockNames"));
 		narr = [];
 		for(var i = 0; i< names.companies.length; i++) {
 			narr.push(names.companies[i].name);
@@ -217,10 +215,12 @@
 		}
 
 		var set = 0;
-
+		
+		//init autocompleting form
 		$("#stock_symbol").autocomplete({
 			source: narr,
 			select: function(event, ui){
+				//if user types selects new symbol, clear old data
 				if(set) {
 					$('#lvl1_table2').text("");
 					set = 0;
@@ -229,6 +229,8 @@
 					$('#t2').toggle("visibility");
 				}
 				set = 1;
+
+				//retrieve and parse data from server
 				lvl1 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSingleMethod?company=' + ui.item.value));
 				$('#mar').text(parseFloat(Math.round((lvl1.mar) * 100) / 100).toFixed(2) + '%');
 				$('#aar').text(parseFloat(Math.round((lvl1.aar) * 100) / 100).toFixed(2) + '%');
@@ -245,20 +247,21 @@
 		});
 
 		//Level 2/3 -------------------------------------------------
-
+	
+		//get double from slider, send to server (default AAPL and F, although extensible on API side to other companies)
 		function updateTextInput(val) {
 			$("#sp1").text(parseFloat(Math.round(val * 100) / 100).toFixed(2));
 			$("#sp2").text(parseFloat(Math.round((100-val) * 100) / 100).toFixed(2));
-			textOutput = httpGet("https://debit-suisse.herokuapp.com/getProportion?proportion=" + val +
-      "&?companyOne=AAPL&companyTwo=F");
+			textOutput = httpGet("https://debit-suisse.herokuapp.com/getProportion?proportion=" + val + "&?companyOne=AAPL&companyTwo=F");
 			textOutput = JSON.parse(textOutput);
 			$("#sp3").text(parseFloat(Math.round(textOutput.aVol * 100) / 100).toFixed(2));
 			$("#sp4").text(parseFloat(Math.round(textOutput.aRet * 100) / 100).toFixed(2));
 		}
-		updateTextInput(50);
+		updateTextInput(50); //default values based on half-and-half portfolio allocation
 
 		//Level 4 ---------------------------------------------------
 
+		//retrieve data from server to construct chart
 		av = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getAllValues?companyOne=AAPL&companyTwo=F"));
 		var trace1 = {
 		  y: JSON.parse(av.aVol),
@@ -284,7 +287,8 @@
 		Plotly.newPlot('lvl4p', data, layout);
 
 		//Level 5 ---------------------------------------------------
-
+		
+		//get and display a dynamically generated optimized portfolio
 		lvl5 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSemiRandomizedPortfolio'));
 		$('#aar2').text(parseFloat(Math.round(lvl5.aar * 100) / 100).toFixed(2) + "%");
 		$('#av2').text(parseFloat(Math.round(lvl5.av * 100) / 100).toFixed(2) + "%");
@@ -294,6 +298,7 @@
 			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "%</td></tr>");
 		}
 
+		//after all tabs have loaded, phase out loading animation and un-hide main panel
 		$('#load').toggle('visibility');
 		$('#main').css('visibility','visible');
 	</script>
