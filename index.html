@@ -22,10 +22,10 @@
 		}
 
 		.tabs .indicator {
-			background-color: #0d47a1 !important;	
+			background-color: #0d47a1 !important;
 		}
 
-		path { 
+		path {
 			stroke: steelblue;
 			stroke-width: 2;
 			fill: none;
@@ -38,7 +38,7 @@
 			stroke-width: 1;
 			shape-rendering: crispEdges;
 		}
-	
+
 		.ui-helper-hidden-accessible {
 			display: none;
 		}
@@ -72,7 +72,7 @@
 		</div>
 		<div class="card-panel" id="main" style="margin-top: 50px; visibility: hidden">
 			<h5>Money Manager Application™</h5>
-			<hr>			
+			<hr>
 			<div class="row" style="padding-top: 5px; padding-left: 20px; padding-right: 20px;">
 				<div class="col s12">
 					<ul class="tabs">
@@ -146,7 +146,7 @@
 							</div>
 							<div class="row">
 								<div class="col s12">
-									<p style="font-size: 24px"> 
+									<p style="font-size: 24px">
 										Average Volatility of Portfolio: <span class = "green-text text-darken-4" id="sp3"> N/A </span>%<br>
 										Average Annual Return of Portfolio: <span class = "green-text text-darken-4" id="sp4"> N/A </span>%
 									</p>
@@ -154,7 +154,7 @@
 							</div>
 						</div>
 					</div>
-					<div id="lvl4" class="col s12">										
+					<div id="lvl4" class="col s12">
 						<div class="card-panel">
 							<div id="lvl4p"></div>
 						</div>
@@ -234,7 +234,7 @@
 				$('#aar').text(lvl1.aar);
 				$('#mv').text(lvl1.mv);
 				$('#av').text(lvl1.av);
-				
+
 				for(var i = 0; i< lvl1.cf.length; i++) {
 					$('#lvl1_table2').append("<td>" + parseFloat(Math.round(Object.values(lvl1.cf[i])[0] * 100) / 100).toFixed(2) + "</td>");
 				}
@@ -249,16 +249,17 @@
 		function updateTextInput(val) {
 			$("#sp1").text(parseFloat(Math.round(val * 100) / 100).toFixed(2));
 			$("#sp2").text(parseFloat(Math.round((100-val) * 100) / 100).toFixed(2));
-			textOutput = httpGet("https://debit-suisse.herokuapp.com/getProportion?proportion=" + val);
+			textOutput = httpGet("https://debit-suisse.herokuapp.com/getProportion?proportion=" + val +
+      "&?companyOne=AAPL&companyTwo=F");
 			textOutput = JSON.parse(textOutput);
 			$("#sp3").text(parseFloat(Math.round(textOutput.aVol * 100) / 100).toFixed(2));
 			$("#sp4").text(parseFloat(Math.round(textOutput.aRet * 100) / 100).toFixed(2));
 		}
-		updateTextInput(50);	
+		updateTextInput(50);
 
 		//Level 4 ---------------------------------------------------
 
-		av = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getAllValues"));
+		av = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getAllValues?companyOne=AAPL&companyTwo=F"));
 		var trace1 = {
 		  y: JSON.parse(av.aVol),
 		  x: JSON.parse(av.aRet),
@@ -288,16 +289,14 @@
 		$('#aar2').text(lvl5.aar);
 		$('#av2').text(lvl5.av);
 		$('#ep').text("$"+lvl5.ep);
-		
+
 		for(var i = 0; i< lvl5.pu.length; i++) {
 			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "</td></tr>");
 		}
-		
+
 		$('#load').toggle('visibility');
 		$('#main').css('visibility','visible');
 	</script>
 </body>
 
 </html>
-
-
