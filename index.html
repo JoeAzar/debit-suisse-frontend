@@ -183,7 +183,7 @@
 								<thead>
 									<tr>
 										<th>Symbol</th>
-										<th>Portfolio Percentage</th>
+										<th>Portfolio Makeup</th>
 									</tr>
 								</thead>
 								<tbody id = "lvl5_table1">
@@ -230,10 +230,10 @@
 				}
 				set = 1;
 				lvl1 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSingleMethod?company=' + ui.item.value));
-				$('#mar').text(lvl1.mar);
-				$('#aar').text(lvl1.aar);
-				$('#mv').text(lvl1.mv);
-				$('#av').text(lvl1.av);
+				$('#mar').text(parseFloat(Math.round((lvl1.mar) * 100) / 100).toFixed(2) + '%');
+				$('#aar').text(parseFloat(Math.round((lvl1.aar) * 100) / 100).toFixed(2) + '%');
+				$('#mv').text(parseFloat(Math.round((lvl1.mv) * 100) / 100).toFixed(2) + '%');
+				$('#av').text(parseFloat(Math.round((lvl1.av) * 100) / 100).toFixed(2) + '%');
 
 				for(var i = 0; i< lvl1.cf.length; i++) {
 					$('#lvl1_table2').append("<td>" + parseFloat(Math.round(Object.values(lvl1.cf[i])[0] * 100) / 100).toFixed(2) + "</td>");
