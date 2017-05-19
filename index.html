@@ -235,7 +235,7 @@
 				$('#mv').text(lvl1.mv);
 				$('#av').text(lvl1.av);
 				
-				for(var i = 0; i< lvl1.cf.length; i++){
+				for(var i = 0; i< lvl1.cf.length; i++) {
 					$('#lvl1_table2').append("<td>" + parseFloat(Math.round(Object.values(lvl1.cf[i])[0] * 100) / 100).toFixed(2) + "</td>");
 				}
 				$('#cp1').toggle("visibility");
@@ -290,7 +290,7 @@
 		$('#ep').text("$"+lvl5.ep);
 		
 		for(var i = 0; i< lvl5.pu.length; i++) {
-			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + Object.values(lvl5.pu[i])[0] + "</td></tr>");
+			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "</td></tr>");
 		}
 		
 		$('#load').toggle('visibility');
