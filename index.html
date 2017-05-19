@@ -300,7 +300,7 @@
 				$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "%</td></tr>");
 			}
 		}
-		gen();
+		//gen();
 		$('#refresh').click(function() {
 			$('#lvl5_table1').text("");
 			gen();
