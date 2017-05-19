@@ -64,22 +64,54 @@
 									<th>Annual Avg Return</th>
 									<th>Monthly Volatility</th>
 									<th>Annual Volatility</th>
-									<th>Correlation Factor</th>
 								</tr>
 							</thead>
-							<tbody id = "lv1_table">
+							<tbody id = "lv1_table1">
+								<!-- js generate -->
+							</tbody>
+						</table>
+						<table class = 'striped centered'>
+							<thead>
+								<tr id= "lv1_format2">
+									<!-- js generate -->
+								</tr>
+							</thead>
+							<tbody id = "lv1_table2">
 								<!-- js generate -->
 							</tbody>
 						</table>
 					</div>
 					<div id="lvl2-3" class="col s12">
-						<p>
-						  <form action="#">
-							<p class="range-field">
-							  <input type="range" id="test5" min="0" max="100" step="0.01"  onchange="updateTextInput(this.value);" />
-							</p>
-						  </form>
-						</p>
+						<h5 style = "margin-top: 20px">Adjust the stock ratio (AAPL: <span id="sp1">50</span>%, FORD: <span id="sp2">50</span>%):</h5>
+						<div class="row">
+							<div class="col m2">
+								<p style="text-align: center; font-size: 20px">
+									<strong>AAPL</strong>
+								</p>
+							</div>
+							<div class="col m8">
+								<p>
+								  <form action="#">
+									<p class="range-field">
+									  <input type="range" id="test5" min="0" max="100" step="0.01"  onchange="updateTextInput(this.value);" />
+									</p>
+								  </form>
+								</p>
+							</div>
+							<div class="col m2">
+								<p style="text-align: center; font-size: 20px">
+									<strong>FORD</strong>
+								</p>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col s12">
+								<p style="font-size: 24px"> 
+									Average Volatility of Portfolio: <span class = "green-text text-darken-4" id="sp3"> N/A </span>%<br>
+									Average Annual Return of Portfolio: <span class = "green-text text-darken-4" id="sp4"> N/A </span>%
+								</p>
+							</div>
+						</div>
 					</div>
 					<div id="lvl4" class="col s12">										
 					
@@ -94,59 +126,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 	<script src="https://d3js.org/d3.v4.min.js"></script>	
 	<script>
-		$.get( "test.php", function( data ) {
-			// Set the dimensions of the canvas / graph
-			var margin = {top: 30, right: 20, bottom: 30, left: 50},
-				width = 600 - margin.left - margin.right,
-				height = 270 - margin.top - margin.bottom;
-
-			// Set the ranges
-			var x = d3.time.scale().range([0, width]);
-			var y = d3.scale.linear().range([height, 0]);
-
-			// Define the axes
-			var xAxis = d3.svg.axis().scale(x)
-				.orient("bottom").ticks(5);
-
-			var yAxis = d3.svg.axis().scale(y)
-				.orient("left").ticks(5);
-
-			// Define the line
-			var valueline = d3.svg.line()
-				.x(function(d) { return x(d.aVol); })
-				.y(function(d) { return y(d.aRet); });
-				
-			// Adds the svg canvas
-			var svg = d3.select("lvl4")
-				.append("svg")
-					.attr("width", width + margin.left + margin.right)
-					.attr("height", height + margin.top + margin.bottom)
-				.append("g")
-					.attr("transform", 
-						  "translate(" + margin.left + "," + margin.top + ")");
-				// Get the data
-				d3.csv(data, function(error, tdata) {
-					// Scale the range of the data
-					x.domain([0, d3.max(data, function(d) { return d.aVol; })]);
-					y.domain([0, d3.max(data, function(d) { return d.aRet; })]);
-
-					// Add the valueline path.
-					svg.append("path")
-						.attr("class", "line")
-						.attr("d", valueline(data));
-
-					// Add the X Axis
-					svg.append("g")
-						.attr("class", "x axis")
-						.attr("transform", "translate(0," + height + ")")
-						.call(xAxis);
-
-					// Add the Y Axis
-					svg.append("g")
-						.attr("class", "y axis")
-						.call(yAxis);
-				});
-		});
 
 		function httpGet(theUrl) {
 			var xmlHttp = new XMLHttpRequest();
@@ -155,9 +134,66 @@
 			return xmlHttp.responseText;
 		}
 
+		data = httpGet('https://debit-suisse.herokuapp.com/getAllValues');
+		// Set the dimensions of the canvas / graph
+		var margin = {top: 30, right: 20, bottom: 30, left: 50},
+			width = 600 - margin.left - margin.right,
+			height = 270 - margin.top - margin.bottom;
+
+		// Set the ranges
+		var x = d3.time.scale().range([0, width]);
+		var y = d3.scale.linear().range([height, 0]);
+
+		// Define the axes
+		var xAxis = d3.svg.axis().scale(x)
+			.orient("bottom").ticks(5);
+
+		var yAxis = d3.svg.axis().scale(y)
+			.orient("left").ticks(5);
+
+		// Define the line
+		var valueline = d3.svg.line()
+			.x(function(d) { return x(d.aVol); })
+			.y(function(d) { return y(d.aRet); });
+			
+		// Adds the svg canvas
+		var svg = d3.select("lvl4")
+			.append("svg")
+				.attr("width", width + margin.left + margin.right)
+				.attr("height", height + margin.top + margin.bottom)
+			.append("g")
+				.attr("transform", 
+					  "translate(" + margin.left + "," + margin.top + ")");
+		// Get the data
+		d3.csv(data, function(error, tdata) {
+			// Scale the range of the data
+			x.domain([0, d3.max(data, function(d) { return d.aVol; })]);
+			y.domain([0, d3.max(data, function(d) { return d.aRet; })]);
+
+			// Add the valueline path.
+			svg.append("path")
+				.attr("class", "line")
+				.attr("d", valueline(data));
+
+			// Add the X Axis
+			svg.append("g")
+				.attr("class", "x axis")
+				.attr("transform", "translate(0," + height + ")")
+				.call(xAxis);
+
+			// Add the Y Axis
+			svg.append("g")
+				.attr("class", "y axis")
+				.call(yAxis);
+		});
+
 		function updateTextInput(val) {
-			textOutput = httpGet("http://localhost:8080/getProportion?proportion=" + val);
-			//document.getElementById('textInput').value=textOutput;
+			$("#sp1").text(parseFloat(Math.round(val * 100) / 100).toFixed(2));
+			$("#sp2").text(parseFloat(Math.round((100-val) * 100) / 100).toFixed(2));
+			textOutput = httpGet("https://debit-suisse.herokuapp.com/getProportion?proportion=" + val);
+			textOutput = JSON.parse(textOutput);
+			$("#sp3").text(parseFloat(Math.round(textOutput.aVol * 100) / 100).toFixed(2));
+			$("#sp4").text(parseFloat(Math.round(textOutput.aRet * 100) / 100).toFixed(2));
 		}
 	</script>
 </body>
