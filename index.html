@@ -286,8 +286,8 @@
 		//Level 5 ---------------------------------------------------
 
 		lvl5 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSemiRandomizedPortfolio'));
-		$('#aar2').text(lvl5.aar);
-		$('#av2').text(lvl5.av);
+		$('#aar2').text(parseFloat(Math.round(lvl5.aar * 100) / 100).toFixed(2));
+		$('#av2').text(parseFloat(Math.round(lvl5.av * 100) / 100).toFixed(2));
 		$('#ep').text("$"+lvl5.ep);
 
 		for(var i = 0; i< lvl5.pu.length; i++) {
