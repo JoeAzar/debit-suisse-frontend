@@ -46,10 +46,7 @@
 </head>
 
 <body style="background-color: #212121;">
-    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
-	<div class="container" style="width: 80%">
+	<div class="container" style="width: 80%;">
 		<div class="card-panel" style="margin-top: 50px;">
 			<h5>Money Manager Application™</h5>
 			<hr>			
@@ -62,114 +59,126 @@
 						<li class="tab col s3"><a href="#lvl5">Level 5</a></li>
 					</ul>
 					<!-- level 1 -->
-					<div id="lvl1" class "col s12" style="min-height: 200px">	
-						<label>Stock Symbol: </label>
-						<input id="stock_symbol" type="text" class="form-control" name="symbol" maxlength="50">
-						<table class = 'striped centered' style='display: none' id="t1">
-							<thead>
-								<tr>
-									<th>Monthly Avg Return</th>
-									<th>Annual Avg Return</th>
-									<th>Monthly Volatility</th>
-									<th>Annual Volatility</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td id="mar"></td>
-									<td id="aar"></td>
-									<td id="mv"></td>
-									<td id="av"></td>
-								</tr>
-							</tbody>
-						</table>
-						<table class = 'striped centered' style='display: none' id="t2">
-							<thead>
-								<tr id= "lvl1_format2">
-									<!-- js generate -->
-								</tr>
-							</thead>
-							<tbody>
-								<tr id = "lvl1_table2">
-									<!-- js generate -->
-								</tr>
-							</tbody>
-						</table>
+					<div id="lvl1" class "col s12" style="min-height: 200px">
+						<div class="card-panel">
+							<label>Stock Symbol: </label>
+							<input id="stock_symbol" type="text" class="form-control" name="symbol" maxlength="50">
+						</div>
+						<div class="card-panel" id = "cp1" style = "display: none">
+							<table class = 'striped centered' style='display: none' id="t1">
+								<thead>
+									<tr>
+										<th>Monthly Avg Return</th>
+										<th>Annual Avg Return</th>
+										<th>Monthly Volatility</th>
+										<th>Annual Volatility</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td id="mar"></td>
+										<td id="aar"></td>
+										<td id="mv"></td>
+										<td id="av"></td>
+									</tr>
+								</tbody>
+							</table>
+							<table class = 'striped centered' style='display: none' id="t2">
+								<thead>
+									<tr id= "lvl1_format2">
+										<!-- js generate -->
+									</tr>
+								</thead>
+								<tbody>
+									<tr id = "lvl1_table2">
+										<!-- js generate -->
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 					<div id="lvl2-3" class="col s12">
-						<h5 style = "margin-top: 20px">Adjust the stock ratio (AAPL: <span id="sp1">50</span>%, FORD: <span id="sp2">50</span>%):</h5>
-						<div class="row">
-							<div class="col m2">
-								<p style="text-align: center; font-size: 20px">
-									<strong>AAPL</strong>
-								</p>
-							</div>
-							<div class="col m8">
-								<p>
-								  <form action="#">
-									<p class="range-field">
-									  <input type="range" id="test5" min="0" max="100" step="0.01"  onchange="updateTextInput(this.value);" />
+						<div class="card-panel">
+							<h5 style = "margin-top: 20px">Adjust the stock ratio:</h5>
+							<div class="row">
+								<div class="col m2">
+									<p style="text-align: center; font-size: 20px">
+										<strong>AAPL</strong> (<span id="sp1">50</span>%)
 									</p>
-								  </form>
-								</p>
+								</div>
+								<div class="col m8">
+									<p>
+									  <form action="#">
+										<p class="range-field">
+										  <input type="range" id="test5" min="0" max="100" step="0.01"  onchange="updateTextInput(this.value);" />
+										</p>
+									  </form>
+									</p>
+								</div>
+								<div class="col m2">
+									<p style="text-align: center; font-size: 20px">
+										<strong>FORD</strong> (<span id="sp2">50</span>%):
+									</p>
+								</div>
 							</div>
-							<div class="col m2">
-								<p style="text-align: center; font-size: 20px">
-									<strong>FORD</strong>
-								</p>
-							</div>
-						</div>
-						<div class="row">
-							<div class="col s12">
-								<p style="font-size: 24px"> 
-									Average Volatility of Portfolio: <span class = "green-text text-darken-4" id="sp3"> N/A </span>%<br>
-									Average Annual Return of Portfolio: <span class = "green-text text-darken-4" id="sp4"> N/A </span>%
-								</p>
+							<div class="row">
+								<div class="col s12">
+									<p style="font-size: 24px"> 
+										Average Volatility of Portfolio: <span class = "green-text text-darken-4" id="sp3"> N/A </span>%<br>
+										Average Annual Return of Portfolio: <span class = "green-text text-darken-4" id="sp4"> N/A </span>%
+									</p>
+								</div>
 							</div>
 						</div>
 					</div>
 					<div id="lvl4" class="col s12">										
-					
+						<div class="card-panel">
+							<div id="lvl4p"></div>
+						</div>
 					</div>
 					<div id="lvl5" class="col s12">
-						<table class = 'striped centered' style='display: none' id="t3">
-							<thead>
-								<tr>
-									<th>Avg Annual Return</th>
-									<th>Annual Volatility</th>
-									<th>Estimated Profit</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td id="aar2"></td>
-									<td id="av2"></td>
-									<td id="ep"></td>
-								</tr>
-							</tbody>
-						</table>
-						<table class = 'striped centered' style='display: none' id="t4">
-							<thead>
-								<tr>
-									<th>Symbol</th>
-									<th>Portfolio %</th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr id = "lvl5_table2">
-									<!-- js generate -->
-								</tr>
-							</tbody>
-						</table>
+						<div class="card-panel">
+							<table class = 'striped centered' id="t3">
+								<thead>
+									<tr>
+										<th>Avg Annual Return</th>
+										<th>Annual Volatility</th>
+										<th>Estimated Profit</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td id="aar2"></td>
+										<td id="av2"></td>
+										<td id="ep"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="card-panel">
+							<table class = 'striped centered' id="t4">
+								<thead>
+									<tr>
+										<th>Symbol</th>
+										<th>Portfolio Percentage</th>
+									</tr>
+								</thead>
+								<tbody id = "lvl5_table1">
+										<!-- js generate -->
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+    <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.0/js/materialize.min.js"></script>
 	<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
 	<script>
-
+		//deprecated method of sending GET but makes workflow easier to understand for demonstration purposes
 		function httpGet(theUrl) {
 			var xmlHttp = new XMLHttpRequest();
 			xmlHttp.open( "GET", theUrl, false ); // false for synchronous request
@@ -177,12 +186,17 @@
 			return xmlHttp.responseText;
 		}
 
-		names = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getStockNames")); //route
+		//Level 1 ---------------------------------------------------
+
+		//names = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getStockNames"));
 		narr = [];
-		for(var i = 0; i< names.companies.length; i++) {
-			narr.push(names.companies[i].name);
-			$('#lvl1_format2').append("<th>" + narr[i] + "</th>");
-		}
+		$.get( "https://debit-suisse.herokuapp.com/getStockNames", function(data) {
+			console.log(data);
+			for(var i = 0; i< names.companies.length; i++) {
+				narr.push(names.companies[i].name);
+				$('#lvl1_format2').append("<th>" + narr[i] + "</th>");
+			}
+		});
 
 		var set = 0;
 
@@ -192,24 +206,42 @@
 				if(set) {
 					$('#lvl1_table2').text("");
 					set = 0;
+					$('#cp1').toggle("visibility");
 					$('#t1').toggle("visibility");
 					$('#t2').toggle("visibility");
 				}
 				set = 1;
-				lvl1 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSingleMethod?company=' + ui.item.value));
-				$('#mar').text(lvl1.mar);
-				$('#aar').text(lvl1.aar);
-				$('#mv').text(lvl1.mv);
-				$('#av').text(lvl1.av);
-				
-				for(var i = 0; i< lvl1.cf.length; i++){
-					$('#lvl1_table2').append("<td>" + parseFloat(Math.round(Object.values(lvl1.cf[i]) * 100) / 100).toFixed(2) + "</td>");
-				}
-				$('#t1').toggle("visibility");
-				$('#t2').toggle("visibility");
+				lvl1 = JSON.parse(httpGet('company=' + ui.item.value));
+				$.get("https://debit-suisse.herokuapp.com/getSingleMethod?", {company: ui.item.value}, function(lvl1) {
+						lvl1 = JSON.parse(lvl1);
+						$('#mar').text(lvl1.mar);
+						$('#aar').text(lvl1.aar);
+						$('#mv').text(lvl1.mv);
+						$('#av').text(lvl1.av);
+						for(var i = 0; i< lvl1.cf.length; i++){
+							$('#lvl1_table2').append("<td>" + parseFloat(Math.round(Object.values(lvl1.cf[i])[0] * 100) / 100).toFixed(2) + "</td>");
+						}
+						$('#cp1').toggle("visibility");
+						$('#t1').toggle("visibility");
+						$('#t2').toggle("visibility");
+				});
 			}
 		});
+
 		
+		//Level 2/3 -------------------------------------------------
+
+		function updateTextInput(val) {
+			$("#sp1").text(parseFloat(Math.round(val * 100) / 100).toFixed(2));
+			$("#sp2").text(parseFloat(Math.round((100-val) * 100) / 100).toFixed(2));
+			textOutput = httpGet("https://debit-suisse.herokuapp.com/getProportion?proportion=" + val);
+			textOutput = JSON.parse(textOutput);
+			$("#sp3").text(parseFloat(Math.round(textOutput.aVol * 100) / 100).toFixed(2));
+			$("#sp4").text(parseFloat(Math.round(textOutput.aRet * 100) / 100).toFixed(2));
+		}
+		updateTextInput(50);	
+
+		//Level 4 ---------------------------------------------------
 
 		av = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getAllValues"));
 		var trace1 = {
@@ -233,18 +265,18 @@
 		  }
 		};
 
-		Plotly.newPlot('lvl4', data, layout);
+		Plotly.newPlot('lvl4p', data, layout);
 
-		function updateTextInput(val) {
-			$("#sp1").text(parseFloat(Math.round(val * 100) / 100).toFixed(2));
-			$("#sp2").text(parseFloat(Math.round((100-val) * 100) / 100).toFixed(2));
-			textOutput = httpGet("https://debit-suisse.herokuapp.com/getProportion?proportion=" + val);
-			textOutput = JSON.parse(textOutput);
-			$("#sp3").text(parseFloat(Math.round(textOutput.aVol * 100) / 100).toFixed(2));
-			$("#sp4").text(parseFloat(Math.round(textOutput.aRet * 100) / 100).toFixed(2));
+		//Level 5 ---------------------------------------------------
+
+		lvl5 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSemiRandomizedPortfolio'));
+		$('#aar2').text(lvl5.aar);
+		$('#av2').text(lvl5.av);
+		$('#ep').text("$"+lvl5.ep);
+		
+		for(var i = 0; i< lvl5.pu.length; i++) {
+			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + Object.values(lvl5.pu[i])[0] + "</td></tr>");
 		}
-
-		updateTextInput(50);
 		
 	</script>
 </body>
