@@ -157,6 +157,7 @@
 						</div>
 					</div>
 					<div id="lvl5" class="col s12">
+						<a class="waves-effect waves-light btn" id="refresh"><i class="material-icons left">loop</i>Generate Portfolio</a>
 						<div class="card-panel">
 							<table class = 'striped centered' id="t3">
 								<thead>
@@ -274,12 +275,12 @@
 		var layout = {
 		  title: 'AAPL vs. FORD',
 		  xaxis: {
-			title: 'Average Return',
+			title: 'Average Volatility',
 			showgrid: false,
 			zeroline: false
 		  },
 		  yaxis: {
-			title: 'Average Volatility',
+			title: 'Average Return',
 			showline: false
 		  }
 		};
@@ -289,14 +290,21 @@
 		//Level 5 ---------------------------------------------------
 		
 		//get and display a dynamically generated optimized portfolio
-		lvl5 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSemiRandomizedPortfolio'));
-		$('#aar2').text(parseFloat(Math.round(lvl5.aar * 100) / 100).toFixed(2) + "%");
-		$('#av2').text(parseFloat(Math.round(lvl5.av * 100) / 100).toFixed(2) + "%");
-		$('#ep').text("$"+lvl5.ep);
+		function gen() {
+			lvl5 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSemiRandomizedPortfolio'));
+			$('#aar2').text(parseFloat(Math.round(lvl5.aar * 100) / 100).toFixed(2) + "%");
+			$('#av2').text(parseFloat(Math.round(lvl5.av * 100) / 100).toFixed(2) + "%");
+			$('#ep').text("$"+lvl5.ep);
 
-		for(var i = 0; i< lvl5.pu.length; i++) {
-			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "%</td></tr>");
+			for(var i = 0; i< lvl5.pu.length; i++) {
+				$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "%</td></tr>");
+			}
 		}
+		gen();
+		$('#refresh').click(function() {
+			$('#lvl5_table1').text("");
+			gen();
+		});
 
 		//after all tabs have loaded, phase out loading animation and un-hide main panel
 		$('#load').toggle('visibility');
