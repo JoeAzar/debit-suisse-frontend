@@ -264,8 +264,8 @@
 		//retrieve data from server to construct chart
 		av = JSON.parse(httpGet("https://debit-suisse.herokuapp.com/getAllValues?companyOne=AAPL&companyTwo=F"));
 		var trace1 = {
-		  y: JSON.parse(av.aVol),
-		  x: JSON.parse(av.aRet),
+		  x: JSON.parse(av.aVol),
+		  y: JSON.parse(av.aRet),
 		  type: 'lines'
 		};
 
