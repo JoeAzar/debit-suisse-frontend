@@ -286,12 +286,12 @@
 		//Level 5 ---------------------------------------------------
 
 		lvl5 = JSON.parse(httpGet('https://debit-suisse.herokuapp.com/getSemiRandomizedPortfolio'));
-		$('#aar2').text(parseFloat(Math.round(lvl5.aar * 100) / 100).toFixed(2));
-		$('#av2').text(parseFloat(Math.round(lvl5.av * 100) / 100).toFixed(2));
+		$('#aar2').text(parseFloat(Math.round(lvl5.aar * 100) / 100).toFixed(2) + "%");
+		$('#av2').text(parseFloat(Math.round(lvl5.av * 100) / 100).toFixed(2) + "%");
 		$('#ep').text("$"+lvl5.ep);
 
 		for(var i = 0; i< lvl5.pu.length; i++) {
-			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "</td></tr>");
+			$('#lvl5_table1').append("<tr><td>" + Object.keys(lvl5.pu[i])[0] + "</td><td>" + parseFloat(Math.round(Object.values(lvl5.pu[i])[0] * 100) / 100).toFixed(2) + "%</td></tr>");
 		}
 
 		$('#load').toggle('visibility');
